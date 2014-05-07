@@ -1,0 +1,7 @@
+<!--{template @admin/header}--> <form action="{$action}" method="post" enctype="multipart/form-data"> <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder"> <tr class="header"> <td colspan="2">确认收款</td> </tr> <tr> <td width="23%" bgcolor="#F4F8FC">订单编号:</td> <td width="77%" align="right">{$order['orderid']}</td> </tr> <tr> <td width="23%" bgcolor="#F4F8FC">商品名称:</td> <td width="77%" align="right">{$order['name']}</td> </tr> <tr> <td bgcolor="#F4F8FC">付费金额：</td> <td align="right"> <input name="money" type="text" id="money" size="5" />
+该金额将首先充值到用户账号中<BR>
+（如果此付款金额+用户账号余额满足开通订单所需，提交后系统将自动扣款并开通订单）
+</td> </tr> <tr> <td width="23%" bgcolor="#F4F8FC">付费方式：</td> <td width="77%" align="right"> <input name="type" type="text" id="type" size="40"> <BR>记录是通过哪个银行或在线支付转账
+</td> </tr> <tr> <td bgcolor="#F4F8FC">付费流水号：</td> <td align="right"> <input name="number" type="text" id="number" size="40" /> <BR>记录转账时的流水号，便于日后核对
+</td> </tr> </table> <br> <center> <input type="hidden" name="orderid" value="{$order['orderid']}" /> <input type="submit" class="button" name="addsubmit" value="提 交" /> </center> </form>
+{template @admin/footer}

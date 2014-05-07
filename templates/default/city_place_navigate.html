@@ -1,0 +1,24 @@
+{if $places}
+<div class="site-fs__cell">	
+<div class="site-fs__cell-title"><div class="quyu"></div>区&nbsp;&nbsp;域:</div>
+<div class="site-fs__cell-son1">
+{loop $places $i $region}
+<a href="{$region['url']}" class="topclass-name {if $region['selected']}selected{/if}">{$region['name']}</a>
+{if $region['selected']}
+{eval $streets = $region['streets']}
+{/if}
+{/loop}
+<div style="clear: both;"></div>
+</div>
+{if $streets && count($streets) > 1}
+<div class="site-fs__cell-son2">
+{loop $streets $ii $street}
+<a href="{$street['url']}" class="topclass-name {if $street['selected']}selected{/if}">{$street['name']}</a>
+{/loop}
+<div style="clear: both;"></div>
+</div>
+{/if}
+<div style="clear: both; height:0px; overflow:hidden;"></div>
+<div style="display: none;">天天团购+区域导航</div>
+</div>
+{/if}

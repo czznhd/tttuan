@@ -1,0 +1,35 @@
+<!--{template header}-->
+{~ui('loader')->js('@jquery.hook')}
+<div class="site-ms">
+<div class="site-ms__left">
+<div class="t_area_out">
+<div class="t_area_in">
+<p class="cur_title" >充值方式</p>
+<div class="sect"  >
+<div class="nleftL" >
+<form action="?mod=recharge&code=payment&op=save&id={$order['orderid']}" method="post">
+<div class="field">
+<label>订单编号：</label>
+<span style=" display:block; padding-top:5px;">{$order['orderid']}</span>
+</div>
+<div class="field">
+<label>充值金额：</label>
+<span style=" display:block; padding-top:5px;">{$order['money']}</span>
+</div>
+<div class="field">
+<!--{eval logic('pay')->html($order)}-->
+</div>
+<div class="field">
+<input type="submit" class="btn btn-primary"  value="下一步" />
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="site-ms__right">
+{~ui('widget')->load()}
+</div>
+</div>
+<!--{template footer}-->

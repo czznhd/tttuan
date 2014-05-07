@@ -1,0 +1,60 @@
+<!--{template header}-->
+{~ui('loader')->css('@jquery.tipTip')}
+{~ui('loader')->js('@jquery.tipTip')}
+{~ui('loader')->js('@jquery.hook')}
+{~ui('loader')->js('@jquery.form')}
+<script type="text/javascript">
+function order_finish(url)
+{
+window.location.href = url;
+}
+</script>
+<div class="site-ms">
+<div class="site-ms__left">    
+<div class="t_area_out">
+<div class="t_area_in">
+<p class="cur_title">请确认订单</p>
+<div class="sect">
+<table id="report">
+<tr>
+<th>团购项目</th>
+<th>数量</th>
+<th>&nbsp;</th>
+<th>价格</th>
+<th>&nbsp;</th>
+<th>总价</th>
+</tr>
+<tr>
+<td width="35%">{$order['product']['flag']}</td>
+<td width="10%" style="text-align:center;">{$order['productnum']}</td>
+<td width="4%" style="text-align:center;">x</td>
+<td width="12%" style="text-align:center;">&yen; {$order['productprice']}</td>
+<td width="4%" style="text-align:center;">=</td>
+<td width="15%" style="text-align:center;"><span class="B">&yen; {$order['price_of_product']}</span></td>
+</tr>
+</table>
+<!--{eval logic('address')->html($order)}-->
+<!--{eval logic('express')->html($order)}-->
+<!--{eval logic('attrs')->html($order)}-->
+<div class="nleftL">
+<p class="P_disa">总金额：{$order['price_of_total']}元</p>
+</div>
+<!--{eval logic('pay')->html($order)}-->
+<div class="submit_div">
+<form id="order_submit" action="?mod=buy&code=order&op=save" method="post">
+<input id="order_id" name="order_id" type="hidden" value="{$order['orderid']}" />
+<input id="order_submit_button" type="submit" class="btn btn-primary" value="确认订单，并支付" />
+<font id="submit_status"></font>
+</form>
+</div>
+</div>
+</div>
+</div>      
+</div>
+{~ui('loader')->js('@buy.order', UI_LOADER_ONCE)}
+<script type="text/javascript">fizinit();selectors();</script>
+<div class="site-ms__right">
+<!--{~ui('widget')->load()}-->
+</div>
+</div>
+<!--{template footer}-->

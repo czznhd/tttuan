@@ -1,0 +1,36 @@
+/** * @copyright (C)2011 Cenwor Inc. * @author Moyo <dev@uuland.org> * @package css * @name buy.checkout.css * @date 2013-09-23 16:08:27 */ .price_calc {
+	width: 100%;
+	margin-top: 10px;
+	border-top: 2px solid #ccc;
+}
+.price_calc .left {
+	text-align: left;
+	padding: 10px;
+	font-weight:600;
+	border-bottom:1px dotted #CCCCCC
+}
+.price_calc .right {
+	font-weight: bold;
+	width: 15%;
+	padding: 6px 0 10px;
+	color:#FF3D33;
+	border-bottom:1px dotted #ddd;
+	text-align:right;
+}
+.price_calc .price {
+	color: #FF3D33;
+}
+.submit_div {
+	text-align: left;
+	margin-top: 10px;
+}
+.submit_div .extmsg {
+	width: 652px;
+	height: 40px;
+	margin-top:10px;
+}
+.submit_div #submit_status {
+	background: #fef;
+	padding: 5px;
+	display: none;
+}

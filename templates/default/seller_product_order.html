@@ -1,0 +1,91 @@
+<!--{template header}-->
+<div class="site-ms">
+<div class="ts_menu_2 w960">
+<ul>
+<li class="ts3_mbtn2"><a href="?mod=seller&code=product&op=list">产品列表</a></li>
+<li class="ts3_mbtn1"><a href="?mod=seller&code=product&op=order&pid={$pid}">=&gt; 订单列表</a></li>
+<li class="ts3_mbtn2"><a href="?mod=list&code=ckticket">团购券验证</a></li>
+</ul>
+</div>
+<div class="t_area_out">
+<div class="t_area_in">
+<div class="nleftL w916">
+<table class="tab_list">
+<tr class="banner">
+<td colspan="8">
+<span style="float:left;">&lt;&lt; {$product['flag']} &gt;&gt;</span>
+<font style="float: right;"><a href="{$fLink['all']['link']}"{$fLink['all']['current']}>全部</a> / <a href="{$fLink['used']['link']}"{$fLink['used']['current']}>已支付</a> / <a href="{$fLink['unused']['link']}"{$fLink['unused']['current']}>未支付</a>&nbsp;&nbsp;&nbsp;</font>
+</td>
+</tr>
+<tr>
+<th width="10%">订单编号</th>
+<th width="10%">订单金额</th>
+<th width="10%">下单会员</th>
+<th width="15%">下单时间</th>
+<th width="10%">订单状态</th>
+<th width="10%">处理进程</th>
+<th width="10%">支付方式</th>
+<th width="15%">支付时间</th>
+</tr>
+{loop $orders $i $order}
+<tr>
+<td>
+{$order['orderid']}
+</td>
+<td>{$order['totalprice']}</td>
+<td>
+{echo user($order['userid'])->get('name')}
+</td>
+<td>{echo date('Y-m-d H:i:s', $order['buytime'])}</td>
+<td>
+{echo logic('order')->STA_Name($order['status'])}
+</td>
+<td>
+{echo logic('order')->PROC_Name($order['process'])}
+</td>
+<td>
+{if $order['paytype'] > 0}
+{eval $payment = logic('pay')->SrcOne($order['paytype'])}
+{$payment['name']}
+{else}
+未支付
+{/if}
+</td>
+<td>
+{if $order['pay'] == 1}
+{echo date('Y-m-d H:i:s', $order['paytime'])}
+{else}
+未支付
+{/if}
+</td>
+</tr>
+{if $order['attrs']}
+<tr>
+<td style="border:1px solid #ccc;border-top:none;border-right:1px dashed #ccc;text-align:right;">规格</td>
+<td colspan="7">
+{loop $order['attrs']['dsp'] $dsp}
+{$dsp['name']} - &yen;{$dsp['price']}<br/>
+{/loop}
+</td>
+</tr>
+{/if}
+{if $order['extmsg']}
+<tr>
+<td style="text-align:right;">备注</td>
+<td colspan="7">
+{$order['extmsg']}
+</td>
+</tr>
+{/if}
+{/loop}
+<tr>
+<td colspan="8">
+{~page_moyo()}
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!--{template footer}-->

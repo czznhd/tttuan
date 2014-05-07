@@ -1,0 +1,4 @@
+<!--{template @admin/header}--> <form method="post" action="{$action}"> <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder"> <tr class="header"> <td colspan="4">邮件订阅管理</td> </tr> <tr> <td width="20%">订阅邮箱</td> <td width="20%">订阅时间</td> <td width="20%">所在城市</td> <td align="center">删除订阅</td> </tr> <!--{if empty($mail)}--> <tr><td colspan="8">暂时还没有任何人订阅我们的邮件，订阅邮件是前台用户注册时或者申请我们邮件信息的邮件地址才会出现在这个地方哦！</td></tr> <!--{/if}--> <!--{loop $mail $i $value}--> <tr onmouseover="this.className='tr_hover'" onmouseout="this.className='tr_normal'"> <td>{$value['email']}</td> <td>{$value['time']}</td> <td>{$mycity[$value['city']]}</td> <td> <a href="#" onclick="if(confirm('您确认要删除吗？')){window.location.href='?mod=tttuangou&code=deleteemail&id={$value['id']}'}" title="删除此订阅">删除</a></td> </tr> <!--{/loop}--> </table>
+{$page_arr}
+<br> <center> </center> </form>
+{template @admin/footer}

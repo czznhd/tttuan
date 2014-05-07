@@ -1,0 +1,166 @@
+<!--{template header}-->
+<div class="site-ms">
+<div class="ts_menu_2 w960">
+<ul>
+<li class="ts3_mbtn2"><a href="?mod=seller&code=product&op=list">产品列表</a></li>
+<li class="ts3_mbtn1"><a href="?mod=seller&code=product&op=order&pid={$pid}">=&gt; 发货清单</a></li>
+<li class="ts3_mbtn2"><a href="?mod=list&code=ckticket">团购券验证</a></li>
+</ul>
+</div>
+<div class="t_area_out">
+<div class="t_area_in">
+<div class="nleftL w916">
+<table class="tab_list">
+<tr class="banner">
+<td colspan="8">
+<span style="float:left;">&lt;&lt; {$product['flag']} &gt;&gt;</span>
+<font style="float: right;"><a href="{$fLink['all']['link']}"{$fLink['all']['current']}>待发货</a> / <a href="{$fLink['used']['link']}"{$fLink['used']['current']}>已发货</a> / <a href="{$fLink['unused']['link']}"{$fLink['unused']['current']}>已完成</a>&nbsp;&nbsp;&nbsp;</font>
+</td>
+</tr>
+<tr>
+<th width="15%">产品名称</th>
+<th width="10%">订单编号</th>
+<th width="10%">下单会员</th>
+<th width="5%">购买数量</th>
+<th width="10%">支付方式</th>
+<th width="10%">配送方式</th>
+<th width="15%">收货地区</th>
+<th width="15%">管理操作</th>
+</tr>
+{loop $deliveries $i $order}
+<tr>
+<td>
+{$order['product']['flag']}
+</td>
+<td>{$order['orderid']}</td>
+<td>
+{echo user($order['userid'])->get('name')}
+</td>
+<td>{$order['productnum']}</td>
+<td>
+{if $order['paytype'] > 0}
+{eval $payment = logic('pay')->SrcOne($order['paytype'])}
+{$payment['name']}
+{else}
+未支付
+{/if}
+</td>
+<td>
+{if $order['express']}
+{$order['express']['name']}<br/><font color="#cccccc">( {echo logic('express')->CID2Name($order['express']['express'])} )</font>
+{else}
+未指定
+{/if}
+</td>
+<td>
+{if $order['address']}
+{$order['address']['region']}
+{else}
+未指定
+{/if}
+</td>
+<td>
+<a href="#show-detail" onclick="delivery_show_detail('{$order[orderid]}');return false;">地址详情</a>
+<br/>
+<a href="#invoice-input" onclick="delivery_invoice_input('{$order[orderid]}');return false;">{if $order['invoice'] != ''}修改快递单号{else}上传快递单号{/if}</a>
+</td>
+</tr>
+<tr id="invoice_for_{$order['orderid']}" style="display:none;">
+<td colspan="4"></td>
+<td colspan="1" style="border:1px solid #ccc;border-top:none;border-right:1px dashed #ccc;text-align:right;">快递单号</td>
+<td colspan="3">
+{if $order['process'] != 'TRADE_FINISHED'}
+<input id="trackingno_of_{$order['orderid']}" type="text" size="20" value="{$order['invoice']}" />
+&nbsp;&nbsp;&nbsp;
+<input id="submiter_of_{$order['orderid']}" type="button" value="{echo $order['invoice']==''?'填写':'修改'}快递单号" onclick="submitTrackingNo('{$order[orderid]}');" />
+{if $order['invoice']==''}
+<br/>
+<font color="#999">提示：当您上传了快递单号后订单状态会变更为“已发货”</font>
+{/if}
+{else}
+{$order['invoice']}
+{/if}
+</td>
+</tr>
+<tr id="detail_for_{$order['orderid']}" style="display:none;">
+<td style="border:1px solid #ccc;border-top:none;border-right:1px dashed #ccc;text-align:right;">收货人</td>
+<td colspan="3">
+{if $order['address']}
+<table style="border:none;">
+<tr>
+<td>姓名</td>
+<td style="border-right:none;">{$order['address']['name']}</td>
+</tr>
+<tr>
+<td>电话</td>
+<td style="border-right:none;">{$order['address']['phone']}</td>
+</tr>
+<tr>
+<td>地址</td>
+<td style="border-right:none;">{$order['address']['region']} {$order['address']['address']}</td>
+</tr>
+<tr>
+<td>邮编</td>
+<td style="border-right:none;">{$order['address']['zip']}</td>
+</tr>
+{if $order['extmsg']}
+<tr>
+<td>备注</td>
+<td style="border-right:none;">{$order['extmsg']}</td>
+</tr>
+{/if}
+</table>
+{else}
+用户没有填写收货地址
+{/if}
+</td>
+<td style="border:1px solid #ccc;border-top:none;border-right:1px dashed #ccc;text-align:right;">规格</td>
+<td colspan="3">
+{if $order['attrs']}
+{loop $order['attrs']['dsp'] $dsp}
+{$dsp['name']} - &yen;{$dsp['price']}<br/>
+{/loop}
+{else}
+用户没有选择规格
+{/if}
+</td>
+</tr>
+{/loop}
+<tr>
+<td colspan="8">
+{~page_moyo()}
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+function delivery_show_detail(orderId)
+{
+$('#detail_for_'+orderId).toggle();
+}
+function delivery_invoice_input(orderId)
+{
+$('#invoice_for_'+orderId).toggle();
+}
+function submitTrackingNo(OID)
+{
+if (!confirm('确定提交吗？')) return;
+var submiter = $('#submiter_of_'+OID);
+submiter.val('正在登记').attr('disabled', 'disabled');
+var trackingno = $('#trackingno_of_'+OID).val();
+$.get('?mod=seller&code=delivery&op=single&oid='+OID+'&no='+trackingno+$.rnd.stamp(), function(data){
+if (data != 'ok')
+{
+submiter.val('保存失败');
+}
+else
+{
+submiter.val('保存成功');
+}
+});
+}
+</script>
+<!--{template footer}-->

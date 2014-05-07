@@ -1,0 +1,48 @@
+<!--{template header}-->
+<script type="text/javascript">
+function checkRecharge()
+{
+var money = Math.round($('#recharge_money').val()*100)/100;
+if (isNaN(money))
+{
+foundError('充值金额必须是一个有效数字！');
+return false;
+}
+if (money <= 0)
+{
+foundError('充值金额必须大于0！');
+return false;
+}
+return true;
+}
+function foundError(msg)
+{
+$('#error_msg').html(msg).css('color', '#e53333');
+setTimeout(function(){$('#error_msg').css('color', '')}, 2000);
+}
+</script>
+<div class="site-ms">
+<div class="site-ms__left">
+<div class="t_area_out">
+<div class="t_area_in">
+<p class="cur_title" >帐户充值</p>
+<div class="sect"  >
+<div class="nleftL" >
+<form action="?mod=recharge&code=order&op=save" method="post" onsubmit="return checkRecharge();" >
+<div class="field">
+<label style=" overflow:hidden;">请输入充值金额</label>
+<input id="recharge_money" name="money" type="text" class="f-l" style="_height:27px;"/>&nbsp;<input type="submit" class="btn btn-primary"  value="下一步" />
+</div>
+</form>
+<div class="field"><p id="error_msg"></p></div>
+<div class="field"><a href="?mod=recharge&code=card&op=redirect">使用充值卡</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="site-ms__right">
+{~ui('widget')->load()}
+</div>
+</div>
+<!--{template footer}-->

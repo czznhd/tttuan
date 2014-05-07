@@ -1,0 +1,61 @@
+<div class="site-ms">
+<div class="site-ms__left">
+{loop $product $item}
+{eval $icc++}
+<div class="t_area_out template1">
+<div class="t_area_in">
+<table class="deal-tile__title">
+<tbody>
+<tr>
+<td>
+<span>今日团购：</span>
+<a href="?view={$item['id']}" target="_blank">{$item['name']}</a>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="deal-tile__detail deal-tile__detail2" >
+<div  class="price"><span>￥</span>{$item['nowprice']} </div>
+<div class="at_shuzi">
+<ul>
+{if $item['presell']}
+<li>原价<br><h4>&yen;{$item['price']}</h4></li>
+<li>团购价<br><h3>{$item['presell']['price_full']}</h3></li>
+<li class="red">{$item['presell']['text']}<br><h3>&yen;{$item['nowprice']}</h3></li>
+{else}
+<li>原价<br><h4>&yen;{$item['price']}</h4></li>
+<li>折扣<br><h3>{$item['discount']}折</h3></li>
+<li class="red">节省<br><h3>&yen;{$item['price']-$item['nowprice']}</h3></li>
+{/if}
+</ul>
+</div>
+<div class="deal_g">
+<div class="gsee">
+<a href="?view={$item['id']}" target="_blank"><div class="gtsee">去看看</div></a>
+</div>
+<div id="tuanState" class="mb_0626"><b>{$item['succ_buyers']}</b>人已购买</div>
+</div>
+<div class="deal-tile__detail"> 
+<img src="templates/default/images/new/time.png" style="position: relative;top: 5px;left: -5px;" />
+剩余时间：
+<div class="deal_djs" id="remainTime_{$item['id']}"></div>
+<script language="javascript">
+addTimeLesser($item['id'], $item['time_remain']);
+</script>
+</div>
+</div>
+<div class="deal-tile__cover">
+<div class="deal-tile__cover_img">{eval ui('iimager')->single($item['id'], $item['imgs'][0])}</div>
+</div>
+<div class="like_share_this">
+{eval app('bshare')->load('product_detail', array('product'=>$item))}
+</div>
+</div>
+</div>
+{/loop}
+<div class="product_list_pager">{~page_moyo()}</div>
+</div>
+<div class="site-ms__right">
+<!--{~ui('widget')->load('index_home')}-->
+</div>
+</div>

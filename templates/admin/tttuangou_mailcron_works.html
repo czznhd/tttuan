@@ -1,0 +1,65 @@
+<!--{template @admin/header}--> <script type="text/javascript" src="./static/js/jquery.js"></script> <form method="post" action="admin.php?mod=tttuangou&code=mailcron&op=dels"> <table cellspacing="1" cellpadding="4" width="100%" class="tableborder"> <tr class="header"> <td>在线邮件发送</td> </tr> <tr> <td>
+这里可以快速的群发邮件，发送期间请不要关闭浏览器。<br/> <b>特别提示：</b><br/>
+如果你使用的邮件服务器有限制，不可以连续的发送邮件，请尽量减少使用本功能的时间。
+</td> </tr> <tr> <td> <div style="width:600px;height:10px;border:1px solid #000;"> <div id="cr_bar" style="width:0px;height:10px;background:#000;"></div> </div>
+[ <font id="cr_sends">0</font> / {$cronLength} ] &gt;&gt;&gt; <font id="cr_perc">0</font> %
+</td> </tr> <tr> <td> <input id="cr_control" type="button" value="开始" class="button" /> </td> </tr> </table> </form> <script type="text/javascript">
+var gf_url = 'admin.php?mod=tttuangou&code=mailcrondo&op=run';
+var gf_runs = false;
+var gf_sends = 0;
+var gf_total = {$cronLength};
+$(document).ready(function(){
+$('#cr_control').bind('click', function(){
+if (!gf_runs)
+{
+gf_runs = true;
+$('#cr_control').val('暂停');
+mailCronRun();
+}
+else
+{
+gf_runs = false;
+$('#cr_control').val('继续');
+}
+});
+});
+function mailCronRun()
+{
+if (!gf_runs) return;
+$.get(gf_url, function(data){
+var sends = parseInt(data);
+if (sends>0)
+{
+gf_sends += sends;
+if (gf_sends >= gf_total)
+{
+alert('发送完成！');
+gf_runs = false;
+gf_sends = gf_total;
+mailCronDisplayer();
+$('#cr_control').val('完成');
+$('#cr_control').unbind('click');
+}
+else
+{
+mailCronDisplayer();
+setTimeout(mailCronRun, 300);
+}
+}
+else
+{
+alert('服务器出错：'+"\n"+data);
+}
+});
+}
+function mailCronDisplayer()
+{
+var prc = (gf_sends/gf_total).toFixed(2);
+var cr_bar = Math.round(prc*600);
+var cr_perc = Math.round(prc*100);
+$('#cr_bar').css('width', cr_bar+'px');
+$('#cr_sends').text(gf_sends);
+$('#cr_perc').text(cr_perc);
+}
+</script>
+{template @admin/footer}

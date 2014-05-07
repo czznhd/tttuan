@@ -1,0 +1,24 @@
+<div id="site-mast__ads1" class="site-mast__ads" style="display:block;background:url({$cfg['image']}) no-repeat center;">
+<a href="javascript:__ad_howdo_hidden();" title="关闭" style="display:block;">
+<div class="howdo_close" style="{if $cfg['close_allow']!='yes'}display:none;{else}display:block;{/if}">
+</div>
+</a>
+<a href="{$cfg['linker']}" style="display:block;width:960px;height:153px;"></a>
+</div>
+<script type="text/javascript">
+// 购买帮助
+$(document).ready(function(){
+if (readCookie('ad_hh_vsd') != 'yes')
+{
+$('#site-mast__ads1').show();
+}
+{if $cfg['close_allow'] == 'yes' && $cfg['auto_hide_allow']}
+setTimeout(function(){__ad_howdo_hidden()}, {echo (int)$cfg['auto_hide_time']}*1000);
+{/if}
+});
+function __ad_howdo_hidden()
+{
+$('#site-mast__ads1').slideUp();
+writeCookie('ad_hh_vsd', 'yes', {echo (int)$cfg['reshow_delay_time']});
+}
+</script>

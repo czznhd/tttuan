@@ -1,0 +1,58 @@
+<!--{template header}-->
+<div class="site-ms">
+<div class="site-ms__left">
+<div class="t_area_out">
+<div class="t_area_in">
+<p class="cur_title">邀请有奖</p>
+<div class="sect invite">
+<p>当好友接受您的邀请，在{conf site_name}网站上首次成功购买，系统会在 24 小时内返还 {~ini('product.default_payfinder')} 元到您的个人中心帐户，下次团购时可直接用于支付。没有数量限制，邀请越多，返利越多。</p>
+<p>这是您的专用邀请链接，请通过 MSN 或 QQ 发送给好友：</p>
+<p>
+<input id="inviteURL" type="text" size="20" style="width:500px;" class="input_h" value="{eval echo $this->Config[site_url]; }/?u={MEMBER_ID}" onclick="copyText(this.value);">
+&nbsp;&nbsp;
+<input type="submit" value=" 复 制 " class="btn btn-primary" onclick="copyText($('#inviteURL').val());">
+</p>
+</div>
+</div>
+</div>    
+<div class="t_area_out">
+<div class="t_area_in">
+{if empty($finder)}
+<p>您还没有邀请到任何人，加油哦！</p>
+{else}
+<table cellspacing="1" cellpadding="0" width="100%" align="center" class="tableborder">
+<tr class="tabletitle">
+<td colspan="4"><b>我的返利列表</b></td>
+</tr>
+<tr class="tableheader">
+<td width="20%">时间</td>
+<td width="15%">受邀请人</td>
+<td>购买的产品</td>
+<td width="15%">返利状态</td>
+</tr>
+{loop $finder $i $one}
+<tr class="tablecon" onmouseover="this.className='tr_hover'" onmouseout="this.className='tr_normal'">
+<td>{echo my_date_format2($one['buytime'])}</td>
+<td>{$one['username']}</td>
+<td>{$one['flag']}</td>
+<td>
+{if $one['status']==1}
+等待验证中
+{elseif $one['status']==2}
+已返利
+{else}
+已经取消
+{/if}
+</td>
+</tr>
+{/loop}
+</table>
+{/if}
+</div>
+</div>  
+</div>
+<div class="site-ms__right">
+{~ui('widget')->load()}
+</div>
+</div>
+<!--{template footer}-->

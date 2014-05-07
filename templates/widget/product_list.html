@@ -1,0 +1,32 @@
+<div class="t_area_out ">
+{eval
+$cpid = isset($_GET['view']) ? $_GET['view'] : -1;
+}
+<h1>其他精彩团购</h1>
+<div class="t_area_in">
+<ul class="product_list">
+{loop logic('product')->GetList(logic('misc')->City('id'),PRO_ACV_Yes) $i $product}
+{eval if ($product['id'] == $cpid) continue ; $ic++; }
+<li>
+<p ><a href="?view={$product['id']}"><img src="{echo imager($product['imgs'][0], IMG_Small);}" width="200" height="121"/></a></p>
+<p class="name"><a href="?view={$product['id']}">{$product['name']}</a></p>
+<div class="shop">
+<div class="pr">
+<font class="price">&yen;{$product['nowprice']}</font>
+<font class="markprice">&nbsp;市场价：&yen;{$product['price']}</font>
+</div>
+<div class="gotosee"><a href="?view={$product['id']}">去看看</a></div>
+<div style="clear:both;"></div>
+</div>
+</li>
+{/loop}
+{if $ic == 0}
+<li>
+<p class="name">
+暂时没有其他团购了哦！
+</p>
+</li>
+{/if}
+</ul>
+</div>
+</div>

@@ -1,0 +1,6 @@
+<!--{template @admin/header}--> <script src="js/calenderJS.js"></script> <script type="text/javascript" charset="utf-8" src="js/kind/kindeditor.js"></script> <script type="text/javascript">
+KE.show({
+id : 'content'
+});
+</script> <form action="{$action}" method="post" enctype="multipart/form-data"> <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder"> <tr class="header"> <td colspan="2">修改邮件模板</td> </tr> <tr> <td width="23%" bgcolor="#F4F8FC">名称:</td> <td width="77%" align="right"> <input name="name" type="text" id="name" size="50" value="{$mail['name']}"></td> </tr> <tr> <td width="23%" bgcolor="#F4F8FC">描述:</td> <td width="77%" align="right"> <input name="intro" type="text" id="intro" size="50"  value="{$mail['intro']}"></td> </tr> <tr> <td width="23%" bgcolor="#F4F8FC">邮件标题:</td> <td width="77%" align="right"> <input name="title" type="text" id="title" size="50"  value="{$mail['title']}"></td> </tr> <tr> <td bgcolor="#F4F8FC">邮件内容:</td> <td align="right"> <div style="clear:both;"> <textarea name="content" style="width:540px; height:200px;" id="content">{$mail['content']}</textarea> </div> </td> </tr> </table> <br> <center><input type="hidden" name="mid" value="{$mail['mid']}"><input type="submit" class="button" name="addsubmit" value="提 交"></center> </form>
+{template @admin/footer}

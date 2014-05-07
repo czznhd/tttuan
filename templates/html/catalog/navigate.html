@@ -1,0 +1,24 @@
+<div class="site-fs__cell" style="border-bottom:none;">
+<div class="site-fs__cell-title"><div class="fenlei"></div>分&nbsp;&nbsp;类：</div>
+<div class="site-fs__cell-son1">
+{loop $catalog $i $topclass}
+<a href="{$topclass['url']}" class="topclass-name {if $topclass['selected']}selected{/if}">{$topclass['name']}</a>
+{if $topclass['selected']}
+{eval $subclasses = $topclass['subclass']}
+{/if}
+{/loop}
+<div style="clear: both;"></div>
+</div>
+{if $subclasses}
+<div class="site-fs__cell-son2">
+{loop $subclasses $ii $subclass}
+<a href="{$subclass['url']}" class="topclass-name {if $subclass['selected']}selected{/if}">
+{$subclass['name']} {if isset($subclass['oslcount'])}<font class="subclass-count">({$subclass['oslcount']})</font>{/if}
+</a>
+{/loop}
+<div style="clear: both;"></div>
+</div>
+{/if}
+<div style="clear: both; height:0px; overflow:hidden;"></div>
+<div style="display: none;">天天团购+分类导航</div>
+</div>

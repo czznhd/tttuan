@@ -1,0 +1,40 @@
+<!--{template @admin/header}--> <div id="addressPrinter" style="width:500px;height:300px;position:absolute;background:#fff;border:3px solid #123;padding:10px;display:none;"> <div style="background:#000;color:#fff;position:absolute;right:0px;top:0px;cursor:pointer;padding:3px;" onclick="addressPrintClose()">关闭</div> <iframe id="addressPrintConnecter" frameborder="0" style="width:100%;height:100%;"></iframe> </div> <form method="post" action="{$action}"> <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder"> <tr class="header"> <td colspan="5">发货管理</td> </tr> <tr> <td colspan="5">
+请输入关键字：
+<input type="text" name="bywhat" size="28" value="{$bywhat}"/> <select name="byway"> <option value="name"{if $byway=='name'} selected="selected"{/if}>产品名</option> <option value="username"{if $byway=='username'} selected="selected"{/if}>购买人</option> <option value="orderid"{if $byway=='orderid'} selected="selected"{/if}>订单号</option> </select>
+&nbsp;&nbsp;&nbsp;<input type="submit" value="搜索" /> </td> </tr> <tr> <td width="50%"><b>{if $switch=='wait'}未发货{else}已发货{/if}</b> 产品  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ <a href="{$actionSwitchURL}">{$actionSwitchName}</a> ]</td> <td width="10%">订单号</td> <td width="10%">付款人</td> <td width="17%">{if $switch=='wait'}付款时间{else}发货时间{/if}</td> <td width="13%">管理</td> </tr> <!--{if empty($list) || $list[0]['orderid'] == ''}--> <tr><td colspan="8">没有找到订单！
+</td></tr> <!--{else}--> <!--{loop $list $i $value}--> <tr onmouseover="this.className='tr_hover'" onmouseout="this.className='tr_normal'"> <td title="{$value['name']}">{eval echo substr($value['product']['name'],0,110);}...</td> <td>{$value['orderid']}</td> <td><a href="admin.php?mod=member&code=modify&id={$value['userid']}">{$value['username']}</a></td> <td>{if $switch=='wait'}{echo my_date_format2($value['paytime']);}{else}{echo my_date_format2($value['expresstime']);}{/if}</td> <td> <a href="javascript:addressPrint({$value['addressid']}, {$value['orderid']});">查看发货地址</a> </td> </tr> <!--{/loop}--> <!--{/if}--> </table> <script type="text/javascript">
+function getScrollTop()
+{
+var scrollTop=0;
+if(document.documentElement&&document.documentElement.scrollTop)
+{
+scrollTop=document.documentElement.scrollTop;
+}
+else if(document.body)
+{
+scrollTop=document.body.scrollTop;
+}
+return scrollTop;
+}
+function $$(ID)
+{
+return document.getElementById(ID);
+}
+function addressPrint(aid, oid)
+{
+var iTop = getScrollTop()+100;
+$$('addressPrinter').style.display = 'block';
+$$('addressPrinter').style.left = '200px';
+$$('addressPrinter').style.top = iTop+'px';
+$$('addressPrintConnecter').src = "?mod=tttuangou&code=express&op=addressview&aid="+aid.toString()+'&oid='+oid.toString();
+//window.open ("?mod=tttuangou&code=express&op=addressview&aid="+aid.toString()+'&oid='+oid.toString(), "addressPrint", "height=176, width=330, left="+(screen.width-330)/2+", top="+(screen.height-176)/2+", toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+}
+function addressPrintClose()
+{
+$$('addressPrinter').style.display = 'none';
+$$('addressPrintConnecter').src = '';
+}
+</script>
+{~page_moyo()}
+<br/> <center></center> </form>
+{template @admin/footer}

@@ -1,0 +1,64 @@
+<!--{template header}-->
+<div class="site-ms">
+<div class="ts_menu_2 w960">
+<ul>
+<li class="ts3_mbtn1"><a href="?mod=seller&code=product&op=list">产品列表</a></li>
+<li class="ts3_mbtn2"><a href="?mod=list&code=ckticket">团购券验证</a></li>
+</ul>
+</div>
+<div class="t_area_out">
+<div class="t_area_in">
+<div class="nleftL w916">
+<table class="tab_list">
+<tr>
+<th width="30%">产品名称</th>
+<th width="15%">上架时间</th>
+<th width="15%">下架时间</th>
+<th width="18%">购买(人)/售出(份)/库存</th>
+<th width="15%">运行状态</th>
+<th width="7%">管理</th>
+</tr>
+{loop $products $i $product}
+<tr>
+<td title="{$product['name']}">{$product['flag']}</td>
+<td>{echo date('Y-m-d H:i:s', $product['begintime'])}</td>
+<td>{echo date('Y-m-d H:i:s', $product['overtime'])}</td>
+<td>{$product['succ_buyers']} / {$product['sells_count']} / {echo $product['maxnum'] > 0 ? ($product['surplus'] > 0 ? $product['surplus'] : '售罄') : '无限'}</td>
+<td><b>{echo logic('product')->STA_Name($product['status'])}</b></td>
+<td>
+<a href="?mod=seller&code=product&op=order&pid={$product['id']}">订单</a>
+</td>
+</tr>
+<tr class="extra">
+<td colspan="3">
+{if $product['type'] == 'ticket'}
+团购券 &gt;&gt; 已消费：{$product['views']['tikCount']['TICK_STA_Used']}，未消费：{$product['views']['tikCount']['TICK_STA_Unused']}，已过期：{$product['views']['tikCount']['TICK_STA_Overdue']}，已失效：{$product['views']['tikCount']['TICK_STA_Invalid']} &gt;&gt; <a href="?mod=seller&code=product&op=ticket&pid={$product['id']}">查看</a>
+{elseif $product['type'] == 'stuff'}
+发货区 &gt;&gt; 已经发货：{$product['views']['delivery']['sended']}，等待发货：{$product['views']['delivery']['waiting']}，已确认收货：{$product['views']['delivery']['finished']} &gt;&gt; <a href="?mod=seller&code=product&op=delivery&pid={$product['id']}">查看</a>
+{elseif $product['type'] == 'prize'}
+抽奖人数：{echo logic('prize')->allCount($product['id'])}
+{/if}
+</td>
+<td colspan="3">
+{if in_array($product['type'], array('ticket', 'stuff'))}
+销售状况 &gt;&gt; 总交易额：{$product['views']['money']['all']}，有效交易额：{$product['views']['money']['real']}
+{/if}
+</td>
+</tr>
+{/loop}
+<tr>
+<td colspan="6" style="border:none;">
+{~page_moyo()}
+</td>
+</tr>
+<tr>
+<td colspan="6" style="border:none;">
+<font color="#999999"> *&nbsp;说明：“有效交易额”，指的是所有已消费的团购券的价值（虚拟）或者已经发货的订单的价值（实物，含运费）</font>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!--{template footer}-->

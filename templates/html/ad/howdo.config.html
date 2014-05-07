@@ -1,0 +1,68 @@
+<!--{template @admin/header}-->
+<form action="?mod=ad&code=config&op=save&flag={$flag}" method="post" enctype="multipart/form-data">
+<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+<tr class="header">
+<td colspan="2">
+<a href="?mod=ad&code=vlist">返回广告列表</a>
+</td>
+</tr>
+<tr>
+<td width="10%" class="td_title">当前图片：</td>
+<td>
+<img src="{$cfg['image']}?{echo time()}" />
+<input name="data[image]" type="hidden" value="{$cfg['image']}" />
+</td>
+</tr>
+<tr>
+<td width="10%" class="td_title">替换图片：</td>
+<td>
+<input name="file" type="file" />
+* 图片分辨率为 950 x 160，不替换请留空
+</td>
+</tr>
+<tr>
+<td class="td_title">链接地址：</td>
+<td>
+<input name="data[linker]" type="text" value="{$cfg['linker']}" />
+</td>
+</tr>
+<tr>
+<td class="td_title">允许关闭？</td>
+<td>
+<label><input name="data[close_allow]" type="radio" value="yes" onchange="closeChange(this.value)" {if $cfg['close_allow'] == 'yes' || $cfg['close_allow'] == ''}checked="checked"{/if} /> 是</label>
+&nbsp;&nbsp;&nbsp;
+<label><input name="data[close_allow]" type="radio" value="no" onchange="closeChange(this.value)" {if $cfg['close_allow'] == 'no'}checked="checked"{/if} /> 否</label>
+</td>
+</tr>
+<tr id="ifAllowCloseCfg">
+<td class="td_title">详细设置：</td>
+<td>
+<input name="data[auto_hide_time]" type="text" size="1" value="{$cfg['auto_hide_time']}" /> 秒后 <label><input name="data[auto_hide_allow]" type="checkbox" {if $cfg['auto_hide_allow']}checked="checked"{/if} /> 自动关闭 </label>，并在 <input name="data[reshow_delay_time]" type="text" size="2" value="{$cfg['reshow_delay_time']}" /> 天后重新显示
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+<input type="submit" value="保存" class="button" />
+</td>
+</tr>
+</table>
+</form>
+<script type="text/javascript">
+function closeChange(tar)
+{
+var obj = $('#ifAllowCloseCfg');
+if (tar == 'yes')
+{
+obj.show();
+}
+else
+{
+obj.hide();
+}
+}
+$(document).ready(function(){
+closeChange($('input[name="data[close_allow]"][checked]').val());
+});
+</script>
+<!--{template @admin/footer}-->

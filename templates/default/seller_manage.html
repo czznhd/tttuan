@@ -1,0 +1,43 @@
+<!--{template header}-->
+<div class="site-ms">
+<div class="ts_menu_2 w960">
+<ul>
+<li class="ts3_mbtn1"><a href="?mod=magseller">团购项目</a></li>
+<li class="ts3_mbtn2"><a href="?mod=list&code=ckticket">团购券验证</a></li>
+</ul>
+</div>
+<div class="t_area_out">
+<div class="t_area_in">
+<div class="nleftL w916">
+<table id="report">
+<tr>
+<th>项目</th>
+<th>详细</th>
+</tr>
+{loop $product $i $value}
+<tr>
+<td width="75%">{$value['flag']}</td>
+<td width="25%">
+{if $value['status']==PRO_STA_Failed}
+团购失败
+{elseif $value['status']==PRO_STA_Normal}
+团购进行中
+{elseif $value['status']==PRO_STA_Success}
+团购已成功
+{if $value['type']=='ticket'}
+<a href="?mod=magseller&code=ticket&id={$value['id']}">(查看团购券)</a>
+{/if}
+{elseif $value['status']==PRO_STA_Finish}
+团购已经结束
+{elseif $value['status']==PRO_STA_Refund}
+团购失败，已经退款
+{/if}
+</td>
+</tr>
+{/loop}
+</table>
+</div>
+</div>
+</div>
+</div>
+<!--{template footer}-->

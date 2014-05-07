@@ -1,0 +1,30 @@
+<!--{template header}-->
+{~ui('loader')->js('@jquery.hook')}
+<div class="site-ms">
+<div class="site-ms__left">
+<div class="t_area_out">
+<div class="t_area_in">
+<p class="cur_title" >支付页面</p>
+<div class="sect"  >
+<div class="nleftL " id="zf_nleftL" >
+<div class="field" >
+<label>订单编号：</label>
+<span>{$order['orderid']}</span>
+</div>
+<div class="field">
+<label>充值金额：</label>
+<span>{$order['money']}</span>
+</div>
+<div>
+{$payment_linker}
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="site-ms__right">
+{~ui('widget')->load()}
+</div>
+</div>
+<!--{template footer}-->

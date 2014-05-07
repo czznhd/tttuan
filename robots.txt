@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /backup/
+Disallow: /cache/
+Disallow: /data/
+Disallow: /errorlog/
+Disallow: /iis_rewrite/
+Disallow: /images/
+Disallow: /include/
+Disallow: /install/
+Disallow: /modules/
+Disallow: /setting/
+Disallow: /templates/
+Disallow: /uc_client/
+Disallow: /ajax.php?
+Disallow: /admin.php?
+

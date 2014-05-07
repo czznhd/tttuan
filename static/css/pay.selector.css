@@ -1,0 +1,18 @@
+.paytype_list {
+	margin: 10px auto;
+}
+.paytype_list .title {
+	padding: 7px 10px;
+	background: #FFF7D7;
+	font-weight:600;
+}
+#payment_clear {
+	height: 20px;
+}
+#payment_total_money {
+	position: absolute;
+}
+#payment_remain_money {
+	position: absolute;
+	display:none;
+}

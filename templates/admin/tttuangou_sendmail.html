@@ -1,0 +1,6 @@
+<!--{template @admin/header}--> <form action="{$action}" method="post" enctype="multipart/form-data"> <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder"> <tr class="header"> <td colspan="2">发送邮件</td> </tr> <tr> <td width="23%" bgcolor="#F4F8FC">邮件标题:</td> <td width="77%" align="right">{$mail['title']}</td> </tr> <tr> <td bgcolor="#F4F8FC">邮件内容:</td> <td align="right">{$mail['content']}</td> </tr> <tr> <td bgcolor="#F4F8FC">请选择地区:</td> <td align="right"><select name="city">
+{loop $city_list $i $value}
+<option value="{$value['cityid']}">{$value['cityname']}</option> 
+{/loop}
+<option value="0">所有</option> </select></td> </tr> </table> <br> <center><input type="hidden" name="mid" value="{$id}"><input type="submit" class="button" name="addsubmit" value="发送"></center> </form>
+{template @admin/footer}
